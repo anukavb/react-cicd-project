@@ -81,18 +81,11 @@ pipeline {
         stage('Unit Testing') {
             steps {
                 echo "Running unit tests with coverage..."
-                sh 'CI=true npm test -- --coverage --watchAll=false --testPathPattern=test.js'
+                sh 'CI=true npm test -- --coverage --watchAll=false'
             }
             post {
                 always {
                     junit allowEmptyResults: true, testResults: '**/junit.xml'
-                    publishHTML(target: [
-                        reportDir: 'coverage/lcov-report',
-                        reportFiles: 'index.html',
-                        reportName: 'Coverage Report',
-                        keepAll: true,
-                        alwaysLinkToLastBuild: true
-                    ])
                 }
             }
         }
