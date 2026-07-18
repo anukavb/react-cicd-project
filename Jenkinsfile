@@ -6,7 +6,12 @@
 // =========================================================================
 
 pipeline {
-    agent any
+    agent {
+        node {
+            label ''
+            customWorkspace 'C:\\jenkins-ws\\react-cicd'
+        }
+    }
 
     // ---- Tools configured in Jenkins Global Tool Configuration ----
     tools {
