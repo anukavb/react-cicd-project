@@ -105,21 +105,24 @@ pipeline {
 
         // ---------------- Stage 6: SonarQube Code Scan ----------------
         stage('SonarQube Code Scan') {
-            steps {
-                echo "Running SonarQube static analysis..."
-                withSonarQubeEnv('MySonarQubeServer') { // Name configured in Manage Jenkins -> System -> SonarQube servers
-                    sh """
-                        sonar-scanner \
-                          -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                          -Dsonar.sources=src \
-                          -Dsonar.exclusions=**/*.test.js,**/node_modules/** \
-                          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-                          -Dsonar.host.url=$SONAR_HOST_URL \
-                          -Dsonar.login=$SONAR_AUTH_TOKEN
-                    """
-                }
+    steps {
+        echo "Running SonarQube static analysis..."
+        withSonarQubeEnv('MySonarQubeServer') {
+            script {
+                def scannerHome = tool 'SonarScanner'
+                sh """
+                    "${scannerHome}/bin/sonar-scanner" \
+                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                      -Dsonar.sources=src \
+                      -Dsonar.exclusions=**/*.test.js,**/node_modules/** \
+                      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+                      -Dsonar.host.url=$SONAR_HOST_URL \
+                      -Dsonar.login=$SONAR_AUTH_TOKEN
+                """
             }
         }
+    }
+}
 
         // ---------------- Stage 7: Quality Gate ----------------
         stage('Quality Gate') {
