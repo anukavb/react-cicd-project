@@ -28,14 +28,14 @@ pipeline {
     environment {
         // Docker Hub
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')       // Jenkins credential ID (username/password or token)
-        DOCKER_IMAGE          = "yourdockerhubuser/react-cicd-app"
+        DOCKER_IMAGE          = "anukavb/react-cicd-app"
         IMAGE_FULL_NAME        = "${DOCKER_IMAGE}:${params.IMAGE_TAG}"
 
         // SonarQube
         SONAR_PROJECT_KEY     = "react-cicd-app"
 
         // AWS / EKS
-        AWS_REGION             = "us-east-1"
+        AWS_REGION             = "ap-south-1"
         EKS_CLUSTER_NAME        = "react-app-eks-cluster"
         AWS_CREDENTIALS_ID       = "aws-jenkins-creds"                // Jenkins credential ID (Access Key/Secret)
 
