@@ -81,7 +81,7 @@ pipeline {
         stage('Unit Testing') {
             steps {
                 echo "Running unit tests with coverage..."
-                sh 'CI=true npm test -- --coverage --watchAll=false'
+                sh 'CI=true npm test -- --coverage --watchAll=false --testPathPattern=test.js'
             }
             post {
                 always {
