@@ -5,7 +5,7 @@ metadata:
   labels:
     app: react-app
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -45,5 +45,6 @@ spec:
             periodSeconds: 15
           securityContext:
             runAsNonRoot: true
+            runAsUser: 1001
             allowPrivilegeEscalation: false
       restartPolicy: Always
